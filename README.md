@@ -2,7 +2,7 @@
 
 A small runnable slice of the [SnackBox fleet design](https://claude.ai/artifact/YUoQtjmUL9DogVd781L5tN). It runs a Go cloud service and a simulator of 30 vending machines in one process. Machines go offline for minutes to days. The demo shows a timed promo reaching them, and sales syncing back with no double counting.
 
-**Live demo:** `<public URL goes here>`. It is on a free tier that sleeps after 15 minutes idle, so the first load can take about a minute. Each wake-up starts a fresh simulation.
+**Live demo:** https://snackbox-bmng.onrender.com. It is on a free tier that sleeps after 15 minutes idle, so the first load can take about a minute. Each wake-up starts a fresh simulation.
 
 ## What it shows
 
