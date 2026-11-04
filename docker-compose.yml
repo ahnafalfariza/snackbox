@@ -1,0 +1,8 @@
+services:
+  snackbox:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      MACHINES: "30"
+      SPEED: "60" # 1 real second = 1 simulated minute

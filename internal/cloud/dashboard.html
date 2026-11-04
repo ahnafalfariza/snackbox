@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SnackBox · promo & sales sync</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--mute:#6b7385;--line:#e3e6ec;--ok:#1f9d55;--okbg:#e6f6ec;--bad:#d64545;--badbg:#fdeaea;--warn:#b7791f;--warnbg:#fdf3e1;--acc:#3b5bdb;--accbg:#e8edff}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#141a26;color:#fff;padding:14px 24px;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center}
+header h1{font-size:18px;margin:0;font-weight:650}
+header h1 span{color:#8fa3ff;font-weight:500}
+.clocks{display:flex;gap:18px;margin-left:auto;font-variant-numeric:tabular-nums}
+.clocks div{font-size:12px;color:#aab3c5}.clocks b{display:block;font-size:16px;color:#fff;font-weight:600}
+main{max-width:1280px;margin:0 auto;padding:18px 24px 40px}
+.lead{color:var(--mute);margin:0 0 16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:22px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.kpi .l{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.04em}
+.kpi .v{font-size:24px;font-weight:650;margin:2px 0;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:12px;color:var(--mute)}
+.kpi.ok{border-color:#b7e4c7;background:var(--okbg)}.kpi.bad{border-color:#f5b5b5;background:var(--badbg)}
+h2{font-size:15px;margin:26px 0 10px;display:flex;align-items:center;gap:10px}
+h2 small{font-weight:400;color:var(--mute);font-size:12px}
+.row{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+@media(max-width:900px){.row{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.promo{border-bottom:1px solid var(--line);padding:10px 0}.promo:last-child{border:0}
+.promo .t{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.promo .t b{font-size:14px}.promo .meta{font-size:12px;color:var(--mute)}
+.bar{height:8px;background:#eef0f4;border-radius:4px;overflow:hidden;margin:6px 0 3px}
+.bar i{display:block;height:100%;background:var(--acc)}
+.pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:10px;background:#eef0f4;color:var(--mute);white-space:nowrap}
+.pill.on{background:var(--okbg);color:var(--ok)}.pill.off{background:var(--badbg);color:var(--bad)}
+.pill.promo{background:var(--accbg);color:var(--acc)}.pill.warn{background:var(--warnbg);color:var(--warn)}
+button{font:inherit;font-size:12px;border:1px solid var(--line);background:#fff;border-radius:6px;padding:5px 10px;cursor:pointer}
+button:hover{border-color:#b9c0cf}button.primary{background:var(--acc);border-color:var(--acc);color:#fff}
+button.danger{color:var(--bad);border-color:#f0c2c2}
+form.add{display:grid;grid-template-columns:2fr 1fr 70px 1fr 70px 70px auto;gap:6px;align-items:end;margin-top:10px;font-size:12px}
+form.add label{display:flex;flex-direction:column;gap:2px;color:var(--mute)}
+form.add input,form.add select{font:inherit;font-size:12px;padding:4px 6px;border:1px solid var(--line);border-radius:5px}
+@media(max-width:1100px){form.add{grid-template-columns:repeat(4,1fr)}}
+form.add input,form.add select{width:100%;min-width:0}
+table{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+th{text-align:left;color:var(--mute);font-weight:500;border-bottom:1px solid var(--line);padding:5px 6px}
+td{border-bottom:1px solid #f0f1f4;padding:5px 6px}
+tr.bad td{background:var(--badbg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:10px}
+.m{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:8px;padding:9px 10px;cursor:pointer;font-size:12px}
+.m.off{border-left-color:var(--bad);background:#fffafa}.m:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.m .h{display:flex;justify-content:space-between;align-items:center}.m .h b{font-size:13px}
+.m .site{color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m .k{display:flex;justify-content:space-between;margin-top:3px}.m .k span:first-child{color:var(--mute)}
+.m .tags{margin-top:6px;display:flex;gap:4px;flex-wrap:wrap;min-height:18px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.note{font-size:12px;color:var(--mute)}
+.alert{background:var(--badbg);border:1px solid #f5b5b5;color:#8a2020;border-radius:8px;padding:10px 12px;margin:10px 0;font-size:13px}
+footer{color:var(--mute);font-size:12px;margin-top:28px}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <h1>SnackBox <span>· promo & sales sync</span></h1>
+  <div class="clocks" id="clocks"><div>Loading… a free host may take ~1 min to wake up.</div></div>
+</header>
+<main>
+<p class="lead">30 simulated vending machines across Indonesia. Each one prices vends from its own signed pricebook, so promos start on time even offline. Each sale stays in the machine's outbox until the cloud acks it; retries are deduplicated on <code>(machine_id, seq)</code>.</p>
+
+<div class="kpis" id="kpis"></div>
+
+<div class="controls">
+  <button class="primary" onclick="cmd('drain')">Run drain test</button>
+  <button onclick="cmd('resume')">Resume selling</button>
+  <span class="note">Drain test: stop new sales and bring every machine online. Within seconds, the cloud count matches what machines sold.</span>
+</div>
+
+<div class="row">
+  <div>
+    <h2>Promos <small>coverage = machines holding a pricebook that contains the promo</small></h2>
+    <div class="panel">
+      <div id="promos"></div>
+      <form class="add" id="addform">
+        <label>Name<input name="name" value="10% off snacks" required></label>
+        <label>Category<select name="cat"><option>snacks</option><option>drinks</option></select></label>
+        <label>% off<input name="pct" type="number" min="1" max="50" value="10"></label>
+        <label>Days<select name="days"><option value="">Every day</option><option>MON</option><option>TUE</option><option>WED</option><option>THU</option><option selected>FRI</option><option>SAT</option><option>SUN</option></select></label>
+        <label>From<input name="start" value="16:00"></label><label>To<input name="end" value="18:00"></label>
+        <button class="primary" type="submit">Publish</button>
+      </form>
+    </div>
+  </div>
+  <div>
+    <h2>Pricebook versions <small>desired state; machines jump to the latest</small></h2>
+    <div class="panel">
+      <div id="badalert"></div>
+      <table id="versions"></table>
+      <div class="controls" style="margin-top:10px">
+        <button class="danger" onclick="post('/v1/pricebooks:publish-bad')">Publish bad pricebook</button>
+        <button onclick="post('/v1/pricebooks:roll-forward')">Roll forward</button>
+      </div>
+      <p class="note">The bad pricebook is validly signed but sells A1 for 0 IDR, as if the compiler had a bug. Machines check signed price bounds, refuse it, and keep selling on their last good pricebook.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Fleet <small>click a machine to take it offline or bring it back</small></h2>
+<div class="grid" id="fleet"></div>
+
+<div class="row">
+  <div>
+    <h2>Latest sales received <small>lag = cloud receive time minus vend time</small></h2>
+    <div class="panel"><table id="recent"></table></div>
+  </div>
+  <div>
+    <h2>Revenue by price source</h2>
+    <div class="panel"><table id="bypromo"></table></div>
+  </div>
+</div>
+
+<footer>JSON: <a href="/api/state">/api/state</a> · <a href="/api/sales-summary">/api/sales-summary</a> · Times are simulated (1 real second = 1 sim minute). State resets when the host restarts.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const idr=n=>'Rp '+Number(n||0).toLocaleString('id-ID');
+const num=n=>Number(n||0).toLocaleString('en-US');
+const zones=[['WIB','Asia/Jakarta'],['WITA','Asia/Makassar'],['WIT','Asia/Jayapura']];
+const tzShort={'Asia/Jakarta':'WIB','Asia/Makassar':'WITA','Asia/Jayapura':'WIT'};
+const fmt=(iso,tz,opt)=>new Date(iso).toLocaleString('en-GB',Object.assign({timeZone:tz,hour:'2-digit',minute:'2-digit'},opt||{}));
+const dur=min=>min<60?Math.round(min)+' min':min<1440?(min/60).toFixed(1)+' h':(min/1440).toFixed(1)+' days';
+
+async function post(url,body,method){
+  const r=await fetch(url,{method:method||'POST',headers:{'content-type':'application/json'},body:body?JSON.stringify(body):undefined});
+  if(!r.ok){const j=await r.json().catch(()=>({}));alert(j.error||r.statusText)}
+  refresh();
+}
+const cmd=(action,machine)=>post('/api/sim/command',{action,machine});
+
+$('addform').onsubmit=e=>{
+  e.preventDefault();const f=new FormData(e.target);
+  const id=('promo-'+f.get('name')).toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,30);
+  post('/v1/promotions',{id,name:f.get('name'),match:{category:[f.get('cat')]},discount:{type:'percent',value:+f.get('pct')},
+    schedule:{days:f.get('days')?[f.get('days')]:[],start:f.get('start'),end:f.get('end')},priority:5,stacking:'exclusive'});
+};
+
+function kpi(l,v,s,cls){return `<div class="kpi ${cls||''}"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${s}</div></div>`}
+
+function render(st){
+  const sim=st.sim||{machines:[]};
+  const simBy=Object.fromEntries((sim.machines||[]).map(m=>[m.id,m]));
+  const total=st.machines.length;
+  const online=(sim.machines||[]).filter(m=>m.online).length;
+  $('clocks').innerHTML=zones.map(([n,tz])=>`<div>${n} · ${tz.split('/')[1]}<b>${fmt(st.sim_time,tz,{weekday:'short'})}</b></div>`).join('')
+    +`<div>Speed<b>${sim.speed||60}×</b></div>`;
+
+  const holdingLatest=st.machines.filter(m=>m.reported_ver===st.latest_ver).length;
+  const ok=sim.check_ok!==false;
+  $('kpis').innerHTML=
+    kpi('Machines online',`${online} / ${total}`,`${total-online} offline right now`)+
+    kpi('Latest pricebook',`v${st.latest_ver}`,`${holdingLatest} / ${total} machines hold it`)+
+    kpi('Vends at machines',num(sim.truth_count),`${idr(sim.truth_revenue)} ground truth`)+
+    kpi('Counted in cloud',num(st.count),`${num(sim.in_flight)} still in machine outboxes`)+
+    kpi('Exactly-once check',ok?'PASS':'FAIL',ok?`${num(st.duplicates)} duplicate uploads dropped`:esc((sim.violations||[])[0]),ok?'ok':'bad')+
+    kpi('Longest upload lag',dur(st.max_lag_min||0),st.max_lag_from?`sale buffered offline on ${esc(st.max_lag_from)}`:'—');
+
+  $('promos').innerHTML=(st.promos||[]).map(p=>{
+    const pct=total?Math.round(100*p.coverage/total):0;
+    const days=(p.schedule.days||[]).join(', ')||'every day';
+    return `<div class="promo"><div class="t"><b>${esc(p.name)}</b><button onclick="post('/v1/promotions/${encodeURIComponent(p.id)}',null,'DELETE')">End promo</button></div>
+      <div class="meta"><code>${esc(p.id)}</code> · ${p.discount.value}% off ${esc((p.match.category||[]).join(', '))} · ${esc(days)} ${esc(p.schedule.start)}–${esc(p.schedule.end)} machine-local</div>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <div class="meta">${p.coverage} / ${total} machines hold it · <span class="pill promo">firing now on ${p.firing_now}</span></div></div>`}).join('')
+    ||'<p class="note">No promos. Publish one below.</p>';
+
+  const latest=st.versions[0];
+  $('badalert').innerHTML=latest&&latest.bad&&latest.rejected?`<div class="alert"><b>v${latest.ver} refused by ${latest.rejected} machines.</b> No machine is selling at the bad price. Roll forward to publish a new good version.</div>`:'';
+  $('versions').innerHTML='<tr><th>Ver</th><th>Change</th><th>Compiled (WIB)</th><th>Holding</th><th>Refused</th></tr>'+
+    st.versions.map(v=>`<tr class="${v.bad?'bad':''}"><td>v${v.ver}</td><td>${esc(v.note)}</td><td>${fmt(v.compiled_at,'Asia/Jakarta',{weekday:'short'})}</td><td>${v.holding}</td><td>${v.rejected||''}</td></tr>`).join('');
+
+  $('fleet').innerHTML=st.machines.map(m=>{
+    const s=simBy[m.id]||{};const on=s.online!==false;
+    let net=on?'<span class="pill on">online</span>':'<span class="pill off">offline</span>';
+    let back='';
+    if(!on){back=s.forced?'held offline':(s.offline_until?'back '+fmt(s.offline_until,m.tz,{weekday:'short'}):'')}
+    const tags=[];
+    (m.active_promos||[]).forEach(p=>tags.push(`<span class="pill promo">${esc(p)}</span>`));
+    if(m.reported_ver<st.latest_ver)tags.push(`<span class="pill warn">behind: v${m.reported_ver}</span>`);
+    if(m.rejected_ver)tags.push(`<span class="pill off" title="${esc(m.reject_reason)}">refused v${m.rejected_ver}</span>`);
+    if(m.low_slots.length)tags.push(`<span class="pill warn">restock ${m.low_slots.length} slots</span>`);
+    return `<div class="m ${on?'':'off'}" onclick="cmd('toggle','${m.id}')" title="click to toggle">
+      <div class="h"><b>${m.id}</b>${net}</div>
+      <div class="site">${esc(m.site)} · ${tzShort[m.tz]||m.tz}</div>
+      <div class="k"><span>Local time</span><span>${m.local_time&&!m.local_time.startsWith('0001')?fmt(m.local_time,m.tz):'—'}</span></div>
+      <div class="k"><span>Pricebook</span><span>v${m.reported_ver||1}</span></div>
+      <div class="k"><span>Outbox</span><span>${s.backlog??m.backlog} unsent</span></div>
+      <div class="k"><span>Sold / in cloud</span><span>${s.truth_count??'?'} / ${m.count}</span></div>
+      <div class="k"><span>Stock</span><span>${m.last_seen_min<0?'—':(m.stock_est?'~':'')+m.stock_units+' units'+(m.stock_est?' (est.)':'')}</span></div>
+      <div class="k"><span>Last seen</span><span>${m.last_seen_min<0?'never':m.last_seen_min<2?'now':dur(m.last_seen_min)+' ago'}</span></div>
+      ${back?`<div class="k"><span>Modem</span><span>${back}</span></div>`:''}
+      <div class="tags">${tags.join('')}</div></div>`}).join('');
+
+  $('recent').innerHTML='<tr><th>Machine</th><th>Seq</th><th>SKU</th><th>Price</th><th>Source</th><th>Lag</th></tr>'+
+    (st.recent||[]).slice().reverse().map(e=>`<tr><td>${e.machine_id}</td><td>${e.seq}</td><td>${e.sku}</td><td>${idr(e.price_minor)}</td><td>${e.promo_id?`<span class="pill promo">${esc(e.promo_id)}</span>`:'base'} · v${e.pricebook_ver}</td><td>${dur(e.lag_min)}</td></tr>`).join('');
+
+  const bp=Object.entries(st.by_promo||{}).sort((a,b)=>b[1].revenue-a[1].revenue);
+  $('bypromo').innerHTML='<tr><th>Source</th><th>Vends</th><th>Revenue</th></tr>'+bp.map(([k,a])=>`<tr><td>${esc(k)}</td><td>${num(a.count)}</td><td>${idr(a.revenue)}</td></tr>`).join('')
+    +`<tr><td colspan="3" class="note">${num(st.received)} events uploaded, ${num(st.duplicates)} were retries and stored once.${sim.sales_paused?' <b>Sales paused (drain test).</b>':''}</td></tr>`;
+}
+
+async function refresh(){
+  try{const r=await fetch('/api/state');render(await r.json())}catch(e){$('clocks').innerHTML='<div>Reconnecting…</div>'}
+}
+refresh();setInterval(refresh,1500);
+</script>
+</body>
+</html>

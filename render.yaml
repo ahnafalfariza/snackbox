@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: snackbox
+    runtime: docker
+    plan: free
+    healthCheckPath: /healthz
+    envVars:
+      - key: MACHINES
+        value: "30"
+      - key: SPEED
+        value: "60"
